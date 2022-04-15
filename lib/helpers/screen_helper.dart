@@ -5,11 +5,13 @@ class ScreenHelper {
     screenSize = MediaQuery.of(context).size;
     height = screenSize!.height;
     width = screenSize!.width;
-    isShortScreen = screenSize!.width <= 1000.0;
+    isWiderScreen = screenSize!.width <= 1000.0;
+    isBiggerScreen = screenSize!.height <= 500.0;
   }
   BuildContext context;
   Size? screenSize;
-  late bool isShortScreen;
+  late bool isWiderScreen;
+  late bool isBiggerScreen;
   late double height;
   late double width;
 }
