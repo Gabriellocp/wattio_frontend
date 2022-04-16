@@ -58,7 +58,7 @@ class _CircularSliderState extends State<CircularSlider> {
                   sweep + startInRadians,
                   backgroundRadius,
                 );
-            return Stack(children: [
+            return Stack(clipBehavior: Clip.none, children: [
               CustomPaint(
                 size: Size(constraints.maxWidth, screen.height * .7),
                 painter: BackgroundSliderPainter(

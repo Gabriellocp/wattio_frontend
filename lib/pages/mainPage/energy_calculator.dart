@@ -17,7 +17,8 @@ class EnergyCalculator extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const Text(
-              'Economia de Energia',
+              'Qual o valor médio da sua conta?',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 32.0,
                 fontWeight: FontWeight.bold,
