@@ -9,7 +9,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenHelper? screen = ScreenHelper(context: context);
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -33,16 +32,15 @@ class App extends StatelessWidget {
                       ),
                     ),
                     CircularSlider(
-                      maxValue: 1,
-                      minValue: 0,
-                      onChanged: (_) {},
+                      maxValue: 50000,
+                      minValue: 1000,
+                      onChanged: (dynamic value) {},
                       startAngle: -90,
                     ),
                     CustomButton(
                       buttonText: 'Calcular',
                       function: () {
                         // ignore: avoid_print
-                        print('Teste');
                       },
                     )
                   ],

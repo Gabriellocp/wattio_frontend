@@ -1,8 +1,4 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:wattio_frontend/helpers/math_helper.dart';
 import 'package:wattio_frontend/styles/colors.dart';
 
 class BackgroundSliderPainter extends CustomPainter {
@@ -29,11 +25,11 @@ class BackgroundSliderPainter extends CustomPainter {
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = strokeWidth;
 
-    Paint handler = Paint();
-    handler.color = AppColors.yellowPrimary;
-    handler.style = PaintingStyle.stroke;
-    handler.strokeCap = StrokeCap.round;
-    handler.strokeWidth = strokeWidth;
+    Paint progress = Paint();
+    progress.color = AppColors.yellowPrimary;
+    progress.style = PaintingStyle.stroke;
+    progress.strokeCap = StrokeCap.round;
+    progress.strokeWidth = strokeWidth;
     canvas.drawCircle(center, backgroundRadius, paint);
     paint.color = Colors.white;
     // Draw handler
@@ -43,7 +39,7 @@ class BackgroundSliderPainter extends CustomPainter {
       startAngle,
       sweep,
       false,
-      handler,
+      progress,
     );
 
     // Text inside the circle
@@ -59,6 +55,7 @@ class BackgroundSliderPainter extends CustomPainter {
       text: span,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
+      maxLines: 2,
     );
     textPainter.layout(minWidth: 0, maxWidth: size.width);
     // Defining the text offset >>

@@ -15,12 +15,10 @@ class CircularSlider extends StatefulWidget {
     required this.minValue,
     required this.maxValue,
     required this.startAngle,
-    this.increment = 1,
     required this.onChanged,
   }) : super(key: key);
-  final double minValue;
-  final double maxValue;
-  final double increment;
+  final int minValue;
+  final int maxValue;
   double startAngle;
   final Function(dynamic) onChanged;
 
@@ -32,8 +30,16 @@ class _CircularSliderState extends State<CircularSlider> {
   MathHelper mathHelper = MathHelper();
   Offset _dragOffset = Offset.zero;
   double sweep = 0.0;
-  late double totalAngle;
+  late int actualValue;
   late Offset handlerPosition;
+  late Offset center;
+
+  @override
+  void initState() {
+    super.initState();
+    actualValue = widget.minValue.toInt();
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenHelper screen = ScreenHelper(context: context);
@@ -44,7 +50,7 @@ class _CircularSliderState extends State<CircularSlider> {
             double backgroundRadius = screen.isWiderScreen
                 ? max(150, constraints.maxWidth * .2)
                 : max(150, constraints.maxWidth * .3);
-            Offset center = Offset(
+            center = Offset(
               constraints.maxWidth / 2,
               screen.height * .6 / 2,
             );
@@ -53,7 +59,6 @@ class _CircularSliderState extends State<CircularSlider> {
                   sweep + startInRadians,
                   backgroundRadius,
                 );
-            totalAngle = mathHelper.toRadian(269);
             return Stack(children: [
               CustomPaint(
                 size: Size(constraints.maxWidth, screen.height * .7),
@@ -62,7 +67,7 @@ class _CircularSliderState extends State<CircularSlider> {
                   backgroundRadius: backgroundRadius,
                   sweep: sweep,
                   start: startInRadians,
-                  text: 'R\$\n${sweep.toStringAsFixed(6)}',
+                  text: 'R\$\n $actualValue',
                 ),
               ),
               Positioned(
@@ -82,7 +87,9 @@ class _CircularSliderState extends State<CircularSlider> {
                           mathHelper.toAngle(_dragOffset, center) -
                           mathHelper.toAngle(previousOffset, center);
                       sweep = mathHelper.normalizeAngle(newAngle);
-                      widget.onChanged(1);
+                      int percentage = (sweep / (2 * pi) * 100).toInt();
+                      actualValue = widget.minValue * (1 + percentage);
+
                       setState(() {});
                     },
                     child: const SliderHandler(),
