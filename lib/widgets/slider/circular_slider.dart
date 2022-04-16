@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wattio_frontend/context/global_context.dart';
 import 'package:wattio_frontend/helpers/math_helper.dart';
@@ -20,7 +22,7 @@ class CircularSlider extends StatefulWidget {
   final double maxValue;
   final double increment;
   double startAngle;
-  final Function(dynamic)? onChanged;
+  final Function(dynamic) onChanged;
 
   @override
   State<CircularSlider> createState() => _CircularSliderState();
@@ -39,7 +41,9 @@ class _CircularSliderState extends State<CircularSlider> {
         ? const Slider(value: 0.2, onChanged: null)
         : LayoutBuilder(builder: (context, constraints) {
             double startInRadians = mathHelper.toRadian(widget.startAngle);
-            double backgroundRadius = constraints.maxWidth * .3;
+            double backgroundRadius = screen.isWiderScreen
+                ? max(150, constraints.maxWidth * .2)
+                : max(150, constraints.maxWidth * .3);
             Offset center = Offset(
               constraints.maxWidth / 2,
               screen.height * .6 / 2,
@@ -58,7 +62,7 @@ class _CircularSliderState extends State<CircularSlider> {
                   backgroundRadius: backgroundRadius,
                   sweep: sweep,
                   start: startInRadians,
-                  text: sweep.toString(),
+                  text: 'R\$\n${sweep.toStringAsFixed(6)}',
                 ),
               ),
               Positioned(
@@ -72,16 +76,13 @@ class _CircularSliderState extends State<CircularSlider> {
                           renderHandler.globalToLocal(details.globalPosition);
                     },
                     onPanUpdate: (details) {
-                      if (sweep <= mathHelper.toRadian(360)) {
-                        print(startInRadians);
-                      }
                       Offset previousOffset = _dragOffset;
                       _dragOffset += details.delta;
                       double newAngle = sweep +
                           mathHelper.toAngle(_dragOffset, center) -
                           mathHelper.toAngle(previousOffset, center);
                       sweep = mathHelper.normalizeAngle(newAngle);
-
+                      widget.onChanged(1);
                       setState(() {});
                     },
                     child: const SliderHandler(),

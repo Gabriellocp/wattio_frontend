@@ -49,7 +49,7 @@ class BackgroundSliderPainter extends CustomPainter {
     // Text inside the circle
     TextSpan span = TextSpan(
       text: text,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 40.0,
         fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
@@ -58,6 +58,7 @@ class BackgroundSliderPainter extends CustomPainter {
     TextPainter textPainter = TextPainter(
       text: span,
       textDirection: TextDirection.ltr,
+      textAlign: TextAlign.center,
     );
     textPainter.layout(minWidth: 0, maxWidth: size.width);
     // Defining the text offset >>
