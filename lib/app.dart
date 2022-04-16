@@ -21,30 +21,32 @@ class App extends StatelessWidget {
             child: FractionallySizedBox(
               widthFactor: !screen.isWiderScreen ? .4 : 1,
               heightFactor: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Economia de Energia',
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text(
+                      'Economia de Energia',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const Expanded(
-                    child: CircularSlider(
-                      minValue: 1000,
-                      maxValue: 3000,
+                    CircularSlider(
+                      maxValue: 1,
+                      minValue: 0,
+                      onChanged: (_) {},
+                      startAngle: -90,
                     ),
-                  ),
-                  CustomButton(
-                    buttonText: 'Calcular',
-                    function: () {
-                      // ignore: avoid_print
-                      print('Teste');
-                    },
-                  )
-                ],
+                    CustomButton(
+                      buttonText: 'Calcular',
+                      function: () {
+                        // ignore: avoid_print
+                        print('Teste');
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           ),
