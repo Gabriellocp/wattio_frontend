@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wattio_frontend/app.dart';
+import 'package:wattio_frontend/pages/mainPage/energy_calculator.dart';
 import 'package:wattio_frontend/context/global_context.dart';
 
 void main() {

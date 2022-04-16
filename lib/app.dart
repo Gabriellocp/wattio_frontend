@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wattio_frontend/helpers/screen_helper.dart';
-import 'package:wattio_frontend/widgets/buttons/custom_button.dart';
-import 'package:wattio_frontend/widgets/slider/circular_slider.dart';
+import 'package:wattio_frontend/pages/mainPage/energy_calculator.dart';
+import 'package:wattio_frontend/pages/mainPage/list_overview.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -15,39 +15,21 @@ class App extends StatelessWidget {
           vertical: screen.height * 0.05,
           horizontal: screen.width * 0.05,
         ),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Flexible(
-            child: FractionallySizedBox(
-              widthFactor: !screen.isWiderScreen ? .4 : 1,
-              heightFactor: 1,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text(
-                      'Economia de Energia',
-                      style: TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    CircularSlider(
-                      maxValue: 50000,
-                      minValue: 1000,
-                      onChanged: (dynamic value) {},
-                      startAngle: -90,
-                    ),
-                    CustomButton(
-                      buttonText: 'Calcular',
-                      function: () {
-                        // ignore: avoid_print
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+        // child: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: const [
+        //     EnergyCalculator(),
+        //     Expanded(
+        //       child: ListOverview(),
+        //     ),
+        //   ],
+        // ),
+        child: Stack(clipBehavior: Clip.none, children: [
+          Positioned.fromRect(
+              rect: Rect.fromLTRB(
+                  screen.width / 4, 0, screen.width, screen.height * .8),
+              child: ListOverview()),
+          Positioned(child: EnergyCalculator())
         ]),
       ),
     );

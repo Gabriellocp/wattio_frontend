@@ -18,7 +18,6 @@ class BackgroundSliderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     double strokeWidth = 30.0;
     double startAngle = start;
-    // double radius1, radius2, diff;
     // Back circle (blue)
     Paint paint = Paint();
     paint.color = AppColors.bluePrimary;
@@ -33,7 +32,6 @@ class BackgroundSliderPainter extends CustomPainter {
     canvas.drawCircle(center, backgroundRadius, paint);
     paint.color = Colors.white;
     // Draw handler
-
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: backgroundRadius),
       startAngle,
