@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wattio_frontend/context/global_context.dart';
 import 'package:wattio_frontend/helpers/math_helper.dart';
-
+import 'package:intl/intl.dart' as intl;
 import 'package:wattio_frontend/helpers/screen_helper.dart';
 import 'package:wattio_frontend/widgets/slider/background_slider_painter.dart';
 import 'package:wattio_frontend/widgets/slider/slider_painter.dart';
@@ -33,7 +32,7 @@ class _CircularSliderState extends State<CircularSlider> {
   late int actualValue;
   late Offset handlerPosition;
   late Offset center;
-
+  intl.NumberFormat nbformat = intl.NumberFormat('#,###.00', 'pt-BR');
   @override
   void initState() {
     super.initState();
@@ -48,8 +47,8 @@ class _CircularSliderState extends State<CircularSlider> {
         : LayoutBuilder(builder: (context, constraints) {
             double startInRadians = mathHelper.toRadian(widget.startAngle);
             double backgroundRadius = screen.isWiderScreen
-                ? max(150, constraints.maxWidth * .2)
-                : max(150, constraints.maxWidth * .3);
+                ? max(200, constraints.maxWidth * .25)
+                : min(200, constraints.maxWidth * .3);
             center = Offset(
               constraints.maxWidth / 2,
               screen.height * .6 / 2,
@@ -67,7 +66,7 @@ class _CircularSliderState extends State<CircularSlider> {
                   backgroundRadius: backgroundRadius,
                   sweep: sweep,
                   start: startInRadians,
-                  text: 'R\$\n $actualValue',
+                  text: 'R\$\n ${nbformat.format(actualValue)}',
                 ),
               ),
               Positioned(
