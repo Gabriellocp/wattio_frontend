@@ -36,6 +36,13 @@ class _BusinessCardState extends State<BusinessCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
         color: AppColors.bluePrimary,
+        boxShadow: [
+          BoxShadow(
+              blurStyle: BlurStyle.inner,
+              color: Colors.black.withOpacity(0.7),
+              blurRadius: 15.0,
+              offset: const Offset(5, 5))
+        ],
         border: Border.all(
           width: 1.0,
           color: AppColors.textPrimary,
