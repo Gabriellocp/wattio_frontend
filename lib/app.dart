@@ -27,9 +27,11 @@ class App extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
                 Flexible(
+                  flex: 4,
                   child: EnergyCalculator(),
                 ),
                 Flexible(
+                  flex: 6,
                   child: FractionallySizedBox(
                     widthFactor: 1,
                     heightFactor: .8,

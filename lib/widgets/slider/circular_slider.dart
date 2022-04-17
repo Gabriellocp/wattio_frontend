@@ -46,9 +46,7 @@ class _CircularSliderState extends State<CircularSlider> {
         ? const Slider(value: 0.2, onChanged: null)
         : LayoutBuilder(builder: (context, constraints) {
             double startInRadians = mathHelper.toRadian(widget.startAngle);
-            double backgroundRadius = screen.isWiderScreen
-                ? max(200, constraints.maxWidth * .25)
-                : min(200, constraints.maxWidth * .3);
+            double backgroundRadius = 160;
             center = Offset(
               constraints.maxWidth / 2,
               screen.height * .6 / 2,
@@ -58,7 +56,7 @@ class _CircularSliderState extends State<CircularSlider> {
                   sweep + startInRadians,
                   backgroundRadius,
                 );
-            return Stack(clipBehavior: Clip.none, children: [
+            return Stack(clipBehavior: Clip.hardEdge, children: [
               CustomPaint(
                 size: Size(constraints.maxWidth, screen.height * .7),
                 painter: BackgroundSliderPainter(
@@ -73,7 +71,8 @@ class _CircularSliderState extends State<CircularSlider> {
                   top: handlerPosition.dy,
                   left: handlerPosition.dx,
                   child: GestureDetector(
-                    onPanStart: (details) {
+                    behavior: HitTestBehavior.translucent,
+                    onPanDown: (details) {
                       RenderBox renderHandler =
                           context.findRenderObject() as RenderBox;
                       _dragOffset =

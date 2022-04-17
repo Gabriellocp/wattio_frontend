@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wattio_frontend/data/stores/slider_store.dart';
-import 'package:wattio_frontend/helpers/screen_helper.dart';
 import 'package:wattio_frontend/widgets/buttons/custom_button.dart';
 import 'package:wattio_frontend/widgets/slider/circular_slider.dart';
 
@@ -10,36 +9,30 @@ class EnergyCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SliderStore store = SliderStore().getInstance();
-    ScreenHelper? screen = ScreenHelper(context: context);
-    return FractionallySizedBox(
-      widthFactor: screen.isWiderScreen ? .4 : 1,
-      heightFactor: 1,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            const Text(
-              'Qual o valor médio da sua conta?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.bold,
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Text(
+            'Qual o valor médio mensal da sua conta?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
             ),
-            CircularSlider(
-              maxValue: 50000,
-              minValue: 1000,
-              onChanged: (dynamic value) {
-                store.actualValue = value;
-              },
-              startAngle: -90,
-            ),
-            CustomButton(
-              buttonText: 'Calcular',
-              function: () => store.getListOfBusiness(value: store.actualValue),
-            )
-          ],
-        ),
+          ),
+          CircularSlider(
+            maxValue: 50000,
+            minValue: 1000,
+            onChanged: (dynamic value) {
+              store.actualValue = value;
+            },
+            startAngle: -90,
+          ),
+          CustomButton(
+            buttonText: 'Calcular',
+            function: () => store.getListOfBusiness(value: store.actualValue),
+          )
+        ],
       ),
     );
   }
