@@ -19,7 +19,7 @@ class CircularSlider extends StatefulWidget {
   final int minValue;
   final int maxValue;
   double startAngle;
-  final Function(dynamic) onChanged;
+  final Function(int) onChanged;
 
   @override
   State<CircularSlider> createState() => _CircularSliderState();
@@ -88,7 +88,7 @@ class _CircularSliderState extends State<CircularSlider> {
                       sweep = mathHelper.normalizeAngle(newAngle);
                       int percentage = (sweep / (2 * pi) * 100).toInt();
                       actualValue = widget.minValue * (1 + percentage);
-
+                      widget.onChanged(actualValue);
                       setState(() {});
                     },
                     child: const SliderHandler(),

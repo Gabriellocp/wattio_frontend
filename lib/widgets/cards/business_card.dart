@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wattio_frontend/helpers/screen_helper.dart';
@@ -27,12 +29,11 @@ class _BusinessCardState extends State<BusinessCard> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenHelper screen = ScreenHelper(context: context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       margin: const EdgeInsets.only(bottom: 30.0),
-      width: screen.width * .02,
       height: 100.0,
+      constraints: const BoxConstraints(maxWidth: 600, minHeight: 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
         color: AppColors.bluePrimary,
@@ -66,55 +67,56 @@ class _BusinessCardState extends State<BusinessCard> {
           ),
         ),
         Expanded(
-            child: Column(
-          children: [
-            Text(
-              data['nome'].toString().toUpperCase(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-                letterSpacing: 2.0,
+          child: Column(
+            children: [
+              Text(
+                data['nome'].toString().toUpperCase(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  letterSpacing: 2.0,
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List<Widget>.of(
-                personTypes.map(
-                  (e) => Row(
-                    children: [
-                      const Icon(
-                        Icons.check,
-                        color: Colors.green,
-                        size: 20.0,
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        e.toUpperCase(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List<Widget>.of(
+                  personTypes.map(
+                    (e) => Row(
+                      children: [
+                        const Icon(
+                          Icons.check,
+                          color: Colors.green,
+                          size: 20.0,
                         ),
-                      )
-                    ],
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        Text(
+                          e.toUpperCase(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              'Desconto: $percentage%',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
+              const SizedBox(
+                height: 10.0,
               ),
-            )
-          ],
-        ))
+              Text(
+                'Desconto: $percentage%',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
+              )
+            ],
+          ),
+        )
       ]),
     );
   }

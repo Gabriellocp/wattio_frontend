@@ -21,6 +21,8 @@ class CustomButton extends StatelessWidget {
     return Material(
       color: AppColors.yellowPrimary,
       borderRadius: borderRadius,
+      shadowColor: AppColors.bluePrimary,
+      elevation: 20.0,
       child: InkWell(
         borderRadius: borderRadius,
         splashColor: Colors.transparent,

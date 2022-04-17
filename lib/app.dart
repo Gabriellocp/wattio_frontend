@@ -16,15 +16,6 @@ class App extends StatelessWidget {
           vertical: screen.height * 0.05,
           horizontal: screen.width * 0.05,
         ),
-        // child: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: const [
-        //     EnergyCalculator(),
-        //     Expanded(
-        //       child: ListOverview(),
-        //     ),
-        //   ],
-        // ),
         child: Stack(clipBehavior: Clip.none, children: [
           Positioned.fromRect(
             rect: Rect.fromLTRB(
