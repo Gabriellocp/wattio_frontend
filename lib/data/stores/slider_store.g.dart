@@ -39,6 +39,22 @@ mixin _$SliderStore on _SliderStoreBase, Store {
     });
   }
 
+  final _$selectedBusinessAtom =
+      Atom(name: '_SliderStoreBase.selectedBusiness');
+
+  @override
+  ObservableMap<String, dynamic> get selectedBusiness {
+    _$selectedBusinessAtom.reportRead();
+    return super.selectedBusiness;
+  }
+
+  @override
+  set selectedBusiness(ObservableMap<String, dynamic> value) {
+    _$selectedBusinessAtom.reportWrite(value, super.selectedBusiness, () {
+      super.selectedBusiness = value;
+    });
+  }
+
   final _$_SliderStoreBaseActionController =
       ActionController(name: '_SliderStoreBase');
 
@@ -68,7 +84,8 @@ mixin _$SliderStore on _SliderStoreBase, Store {
   String toString() {
     return '''
 actualValue: ${actualValue},
-businessList: ${businessList}
+businessList: ${businessList},
+selectedBusiness: ${selectedBusiness}
     ''';
   }
 }

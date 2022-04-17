@@ -15,16 +15,21 @@ abstract class _SliderStoreBase with Store {
   ObservableList<Map<String, dynamic>> businessList =
       ObservableList<Map<String, dynamic>>();
 
+  @observable
+  ObservableMap<String, dynamic> selectedBusiness =
+      ObservableMap<String, dynamic>();
+
   @action
   SliderStore getInstance() => _instance ??= SliderStore();
 
   @action
   void getListOfBusiness({required int value}) {
     businessList.clear();
+    selectedBusiness.clear();
+
     for (Map<String, dynamic> business in infos) {
       int minV = int.tryParse(business['valorMinimoMensal'].toString()) ?? 0;
       int maxV = int.tryParse(business['valorMaximoMensal'].toString()) ?? 0;
-
       if (minV <= value && maxV >= value) {
         businessList.add(business);
       }
