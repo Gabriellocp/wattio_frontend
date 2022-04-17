@@ -1,16 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:wattio_frontend/helpers/screen_helper.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:wattio_frontend/data/stores/slider_store.dart';
 import 'package:wattio_frontend/styles/colors.dart';
 
 class BusinessCard extends StatefulWidget {
   const BusinessCard({
     Key? key,
     required this.data,
+    required this.onTapChange,
   }) : super(key: key);
   final Map<String, dynamic> data;
+  final Function(dynamic) onTapChange;
 
   @override
   State<BusinessCard> createState() => _BusinessCardState();
@@ -23,12 +23,14 @@ class _BusinessCardState extends State<BusinessCard> {
   @override
   void initState() {
     super.initState();
-    data = widget.data;
-    percentage = double.tryParse((data['desconto'] * 100).toString()) ?? 0;
+    percentage =
+        double.tryParse((widget.data['desconto'] * 100).toString()) ?? 0;
   }
 
   @override
   Widget build(BuildContext context) {
+    SliderStore sliderStore = SliderStore().getInstance();
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       margin: const EdgeInsets.only(bottom: 30.0),
@@ -53,24 +55,29 @@ class _BusinessCardState extends State<BusinessCard> {
         Material(
           shape: const CircleBorder(
             side: BorderSide(
-              width: 5.0,
+              width: 2.0,
               color: AppColors.yellowPrimary,
             ),
           ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(30.0),
-            splashColor: Colors.green,
-            onTap: () {},
-            child: const CircleAvatar(
-              backgroundColor: Colors.transparent,
-            ),
-          ),
+          child: Observer(builder: (_) {
+            return InkWell(
+              borderRadius: BorderRadius.circular(30.0),
+              splashColor: AppColors.bluePrimary,
+              onTap: () => widget.onTapChange(widget.data),
+              child: CircleAvatar(
+                backgroundColor:
+                    sliderStore.selectedBusiness['nome'] == widget.data['nome']
+                        ? AppColors.bluePrimary
+                        : Colors.transparent,
+              ),
+            );
+          }),
         ),
         Expanded(
           child: Column(
             children: [
               Text(
-                data['nome'].toString().toUpperCase(),
+                widget.data['nome'].toString().toUpperCase(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22.0,
@@ -81,25 +88,32 @@ class _BusinessCardState extends State<BusinessCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List<Widget>.of(
                   personTypes.map(
-                    (e) => Row(
-                      children: [
-                        const Icon(
-                          Icons.check,
-                          color: Colors.green,
-                          size: 20.0,
-                        ),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Text(
-                          e.toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                    (e) {
+                      List<String> listOfPersonTypes = widget.data['tipos'];
+                      return Row(
+                        children: [
+                          Icon(
+                            listOfPersonTypes.contains(e)
+                                ? Icons.check
+                                : Icons.close,
+                            color: listOfPersonTypes.contains(e)
+                                ? Colors.green
+                                : Colors.red,
+                            size: 20.0,
                           ),
-                        )
-                      ],
-                    ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            e.toUpperCase(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          )
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),

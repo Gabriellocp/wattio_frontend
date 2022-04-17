@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:wattio_frontend/data/infos.dart';
+import 'package:mobx/mobx.dart';
 import 'package:wattio_frontend/data/stores/slider_store.dart';
+import 'package:wattio_frontend/styles/colors.dart';
 import 'package:wattio_frontend/widgets/buttons/custom_button.dart';
 import 'package:wattio_frontend/widgets/cards/business_card.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart' as intl;
 
 class ListOverview extends StatelessWidget {
   const ListOverview({Key? key}) : super(key: key);
@@ -11,6 +13,11 @@ class ListOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SliderStore sliderStore = SliderStore().getInstance();
+    intl.NumberFormat nbformat = intl.NumberFormat('R\$#,###.00', 'pt-BR');
+    double discount;
+
+    double? savePerMonth;
+
     return Observer(builder: (_) {
       return Column(
         children: [
@@ -20,13 +27,44 @@ class ListOverview extends StatelessWidget {
             itemBuilder: (context, index) {
               return Center(
                   child: Wrap(children: [
-                BusinessCard(data: sliderStore.businessList[index])
+                Observer(builder: (_) {
+                  return BusinessCard(
+                    data: sliderStore.businessList[index],
+                    onTapChange: (dynamic value) {
+                      sliderStore.selectedBusiness = ObservableMap.of(value);
+                      discount = double.tryParse(sliderStore
+                              .selectedBusiness['desconto']
+                              .toString()) ??
+                          0.0;
+                      savePerMonth =
+                          double.parse(sliderStore.actualValue.toString()) *
+                              (discount);
+                    },
+                  );
+                })
               ]));
             },
             itemCount: sliderStore.businessList.length,
           )),
-          if (sliderStore.businessList.isNotEmpty)
-            const CustomButton(buttonText: 'Contratar')
+          if (sliderStore.selectedBusiness.isNotEmpty)
+            Column(
+              children: [
+                Text(
+                  'Economize até ${nbformat.format(savePerMonth)} por mês!'
+                      .toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(
+                  height: 100.0,
+                ),
+                const CustomButton(buttonText: 'Contratar')
+              ],
+            )
         ],
       );
     });
