@@ -13,10 +13,8 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? function;
   @override
   Widget build(BuildContext context) {
-    ScreenHelper screen = ScreenHelper(context: context);
     BorderRadius borderRadius = BorderRadius.circular(20);
-    double buttonWidth =
-        screen.isWiderScreen ? screen.width * .2 : screen.width * .3;
+    double buttonWidth = 300;
     double fontSize = 32.0;
     return Material(
       color: AppColors.yellowPrimary,

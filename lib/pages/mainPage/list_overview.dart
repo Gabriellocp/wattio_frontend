@@ -6,6 +6,7 @@ import 'package:wattio_frontend/widgets/buttons/custom_button.dart';
 import 'package:wattio_frontend/widgets/cards/business_card.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:wattio_frontend/widgets/cards/hire_card.dart';
 
 class ListOverview extends StatelessWidget {
   const ListOverview({Key? key}) : super(key: key);
@@ -62,7 +63,14 @@ class ListOverview extends StatelessWidget {
                 const SizedBox(
                   height: 100.0,
                 ),
-                const CustomButton(buttonText: 'Contratar')
+                CustomButton(
+                  buttonText: 'Contratar',
+                  function: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return HireCard(data: sliderStore.selectedBusiness);
+                      }),
+                )
               ],
             )
         ],

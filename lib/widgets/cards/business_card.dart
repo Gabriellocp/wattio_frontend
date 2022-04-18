@@ -34,11 +34,12 @@ class _BusinessCardState extends State<BusinessCard> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       margin: const EdgeInsets.only(bottom: 30.0),
-      height: 100.0,
       constraints: const BoxConstraints(maxWidth: 600, minHeight: 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
-        color: AppColors.bluePrimary,
+        color: sliderStore.selectedBusiness['nome'] == widget.data['nome']
+            ? AppColors.bluePrimary
+            : AppColors.bluePrimary.withOpacity(0.9),
         boxShadow: [
           BoxShadow(
               blurStyle: BlurStyle.inner,
