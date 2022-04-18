@@ -43,7 +43,14 @@ class _CircularSliderState extends State<CircularSlider> {
   Widget build(BuildContext context) {
     ScreenHelper screen = ScreenHelper(context: context);
     return screen.isBiggerScreen
-        ? const Slider(value: 0.2, onChanged: null)
+        ? Slider(
+            value: actualValue.toDouble(),
+            onChanged: (value) => widget.onChanged(value.toInt()),
+            max: double.parse(widget.maxValue.toString()),
+            min: double.parse(
+              widget.minValue.toString(),
+            ),
+          )
         : LayoutBuilder(builder: (context, constraints) {
             double startInRadians = mathHelper.toRadian(widget.startAngle);
             double backgroundRadius = 160;
@@ -51,14 +58,14 @@ class _CircularSliderState extends State<CircularSlider> {
               constraints.maxWidth / 2,
               screen.height * .6 / 2,
             );
-            handlerPosition = (center - const Offset(15, 15)) +
+            handlerPosition = (center - const Offset(60, 60)) +
                 Offset.fromDirection(
                   sweep + startInRadians,
                   backgroundRadius,
                 );
             return Stack(clipBehavior: Clip.hardEdge, children: [
               CustomPaint(
-                size: Size(constraints.maxWidth, screen.height * .7),
+                size: Size(screen.width, 0),
                 painter: BackgroundSliderPainter(
                   center: center,
                   backgroundRadius: backgroundRadius,

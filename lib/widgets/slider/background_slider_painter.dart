@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:wattio_frontend/helpers/math_helper.dart';
 import 'package:wattio_frontend/styles/colors.dart';
 
 class BackgroundSliderPainter extends CustomPainter {
@@ -18,14 +21,15 @@ class BackgroundSliderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     double strokeWidth = 30.0;
     double startAngle = start;
+    canvas.drawColor(Colors.red, BlendMode.color);
     // Back circle (blue)
     Paint paint = Paint();
     paint.color = AppColors.bluePrimary;
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = strokeWidth;
-
     Paint progress = Paint();
-    progress.color = AppColors.yellowPrimary;
+    progress.color = AppColors.yellowPrimary
+        .withOpacity(.4 + (sweep / (2 * pi) > 1 ? 1 : sweep / (2 * pi) * .6));
     progress.style = PaintingStyle.stroke;
     progress.strokeCap = StrokeCap.round;
     progress.strokeWidth = strokeWidth;

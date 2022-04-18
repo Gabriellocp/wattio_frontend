@@ -9,31 +9,35 @@ class EnergyCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SliderStore store = SliderStore().getInstance();
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const Text(
-            'Qual o valor médio mensal da sua conta?',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          'Qual o valor médio mensal da sua conta?',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Flexible(
+          child: FractionallySizedBox(
+            heightFactor: .8,
+            child: CircularSlider(
+              maxValue: 50000,
+              minValue: 1000,
+              onChanged: (dynamic value) {
+                store.actualValue = value;
+              },
+              startAngle: -90,
             ),
           ),
-          CircularSlider(
-            maxValue: 50000,
-            minValue: 1000,
-            onChanged: (dynamic value) {
-              store.actualValue = value;
-            },
-            startAngle: -90,
-          ),
-          CustomButton(
-            buttonText: 'Calcular',
-            function: () => store.getListOfBusiness(value: store.actualValue),
-          )
-        ],
-      ),
+        ),
+        CustomButton(
+          buttonText: 'Calcular',
+          function: () => store.getListOfBusiness(value: store.actualValue),
+        )
+      ],
     );
   }
 }

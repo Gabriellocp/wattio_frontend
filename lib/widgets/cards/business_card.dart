@@ -20,11 +20,13 @@ class _BusinessCardState extends State<BusinessCard> {
   late Map<String, dynamic> data;
   List<String> personTypes = ['Pessoa Física', 'Pessoa Jurídica'];
   late double percentage;
+  late bool hoverSelection;
   @override
   void initState() {
     super.initState();
     percentage =
         double.tryParse((widget.data['desconto'] * 100).toString()) ?? 0;
+    hoverSelection = false;
   }
 
   @override
@@ -36,7 +38,7 @@ class _BusinessCardState extends State<BusinessCard> {
       margin: const EdgeInsets.only(bottom: 30.0),
       constraints: const BoxConstraints(maxWidth: 600, minHeight: 0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(15.0),
         color: sliderStore.selectedBusiness['nome'] == widget.data['nome']
             ? AppColors.bluePrimary
             : AppColors.bluePrimary.withOpacity(0.9),
@@ -53,28 +55,40 @@ class _BusinessCardState extends State<BusinessCard> {
         ),
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Material(
-          shape: const CircleBorder(
-            side: BorderSide(
-              width: 2.0,
-              color: AppColors.yellowPrimary,
-            ),
-          ),
-          child: Observer(builder: (_) {
-            return InkWell(
-              borderRadius: BorderRadius.circular(30.0),
-              splashColor: AppColors.bluePrimary,
-              onTap: () => widget.onTapChange(widget.data),
-              child: CircleAvatar(
-                backgroundColor:
-                    sliderStore.selectedBusiness['nome'] == widget.data['nome']
+        Expanded(
+          flex: 2,
+          child: Center(
+            child: Material(
+              shape: CircleBorder(
+                side: BorderSide(
+                  width: hoverSelection ? 4.0 : 2.0,
+                  color: AppColors.yellowPrimary,
+                ),
+              ),
+              shadowColor: Colors.black,
+              elevation: 10.0,
+              child: Observer(builder: (_) {
+                return InkWell(
+                  borderRadius: BorderRadius.circular(15.0),
+                  splashColor: AppColors.bluePrimary,
+                  onTap: () => widget.onTapChange(widget.data),
+                  onHover: (bool value) => setState(() {
+                    hoverSelection = value;
+                  }),
+                  child: CircleAvatar(
+                    radius: 15.0,
+                    backgroundColor: sliderStore.selectedBusiness['nome'] ==
+                            widget.data['nome']
                         ? AppColors.bluePrimary
                         : Colors.transparent,
-              ),
-            );
-          }),
+                  ),
+                );
+              }),
+            ),
+          ),
         ),
         Expanded(
+          flex: 8,
           child: Column(
             children: [
               Text(
