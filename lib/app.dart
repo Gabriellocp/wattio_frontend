@@ -16,32 +16,53 @@ class App extends StatelessWidget {
           vertical: screen.height * 0.05,
           horizontal: screen.width * 0.05,
         ),
-        child: Stack(clipBehavior: Clip.none, children: [
-          Positioned.fromRect(
-            rect: Rect.fromLTRB(
-                screen.width / 4, 0, screen.width, screen.height * .8),
-            child: const BackgroundImage(),
-          ),
-          Positioned.fill(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Flexible(
-                  flex: 4,
-                  child: EnergyCalculator(),
-                ),
-                Flexible(
-                  flex: 6,
-                  child: FractionallySizedBox(
-                    widthFactor: 1,
-                    heightFactor: .8,
-                    child: ListOverview(),
+        child: screen.isWiderScreen
+            ? Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned.fromRect(
+                    rect: Rect.fromLTRB(
+                        screen.width / 4, 0, screen.width, screen.height * .8),
+                    child: const BackgroundImage(),
                   ),
-                )
-              ],
-            ),
-          )
-        ]),
+                  Positioned.fill(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        Flexible(
+                          flex: 4,
+                          child: EnergyCalculator(),
+                        ),
+                        Flexible(
+                          flex: 6,
+                          child: FractionallySizedBox(
+                            widthFactor: 1,
+                            heightFactor: .8,
+                            child: ListOverview(),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )
+            : Column(
+                children: [
+                  const BackgroundImage(),
+                  Flexible(
+                    flex: 4,
+                    child: EnergyCalculator(),
+                  ),
+                  Flexible(
+                    flex: 6,
+                    child: FractionallySizedBox(
+                      widthFactor: 1,
+                      heightFactor: .8,
+                      child: ListOverview(),
+                    ),
+                  )
+                ],
+              ),
       ),
     );
   }
